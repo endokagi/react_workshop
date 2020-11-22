@@ -15,7 +15,12 @@ const VocabController = () => {
     useEffect(() => {
         const unsub = col.onSnapshot((result) => {
             const dataList = result.docs.map((doc) => {
-                return doc.data();
+                const dataObj = doc.data();
+
+                return {
+                    ...dataObj,
+                    createdAt: dataObj.createdAt ? dataObj.createdAt.toDate() : null
+                }
             });
             setVocabs(dataList)
         });

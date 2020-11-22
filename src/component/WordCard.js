@@ -19,7 +19,17 @@ margin-right: auto;
 margin-left: auto;
 `
 
-const WordCard = ({ word, types, meanings, onDelete }) => {
+const WordCard = ({ word, types, meanings, onDelete, createdAt }) => {
+
+    const formatDate = createdAt ? createdAt.toLocaleDateString('th-TH', {
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric',
+        second: 'numeric'
+    }) : "";
+    
 
     return (
         <StyledWrapper>
@@ -27,6 +37,9 @@ const WordCard = ({ word, types, meanings, onDelete }) => {
                 <Card title={word}>
                     <p>{types.join(", ")}</p>
                     <p>{meanings.join(", ")}</p>
+                    <div>
+                        {formatDate}
+                    </div>
                     <div>
                         <DeleteOutlined className="delete-icon"
                             onClick={onDelete} />
