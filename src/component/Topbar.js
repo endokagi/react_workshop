@@ -35,7 +35,6 @@ const Topbar = () => {
                 </h1>
             </Link>
             <div className='menu'>
-                <div className='menu-item'>Your name</div>
                 <Link to='/add-word'>
                     <div className='menu-item'>Add word</div>
                 </Link>

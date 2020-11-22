@@ -8,6 +8,7 @@ import {
   BrowserRouter as Route
 } from "react-router-dom";
 import AppContext, { AppProvider } from './context/AppContext'
+import './firebase'
 
 ReactDOM.render(
   <React.StrictMode>

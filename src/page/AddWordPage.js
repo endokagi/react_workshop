@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react'
 import styled from 'styled-components'
-import { Image, Input, Select, Button, Divider } from 'antd';
+import { Image, Input, Select, Button, Divider, notification } from 'antd';
 import logo from '../scottish-fold-cat.jpg'
 import AppContext from '../context/AppContext';
 
@@ -34,18 +34,22 @@ const typeOptions = [
 
 const AddWordPage = () => {
 
-    const {vocabs, setVocabs} = useContext(AppContext);
+    const { vocabController } = useContext(AppContext);
+
+    const { addVocab } = vocabController;
 
     const [word, setWord] = useState('kid');
     const [types, setType] = useState(['noun']);
     const [meanings, setMeaning] = useState('เด็ก');
 
     const handleClick = () => {
-        setVocabs([...vocabs, {
-            word,
-            types,
-            meanings: meanings.split(",").map((item) => item.trim())
-        }])
+
+        addVocab(word, types, meanings);
+
+        notification['success']({
+            message: "Yeah!",
+            description: "Added a word"
+        })
     }
 
     return (

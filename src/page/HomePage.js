@@ -3,8 +3,9 @@ import styled from 'styled-components'
 import React from 'react'
 import logo from '../assets/Background-Image.jpg'
 import { Row, Col } from 'antd';
-import { useContext, useState } from 'react'
+import { useContext } from 'react'
 import AppContext from '../context/AppContext';
+import { Loading3QuartersOutlined } from '@ant-design/icons'
 
 const StyledWrapper = styled.div`
 
@@ -38,13 +39,25 @@ h1{
 
 const HomePage = () => {
 
-  const {vocabs, setVocabs} = useContext(AppContext);
+  const { vocabController } = useContext(AppContext);
 
-  const handleDelete = (index) => {
-    const newArr = vocabs.filter((data, id) => {
-      return id !== index
-    })
-    setVocabs(newArr)
+  const { vocabs, deleteVocab } = vocabController;
+
+  const renderVocabs = () => {
+    if (!vocabs) {
+      return <Loading3QuartersOutlined spin/>
+    }
+    else if (vocabs.length <= 0) {
+      return <p>NO DATA</p>
+    } else {
+      return vocabs.map((item, index) => {
+        return (
+          <Col key={index} className="gutter-row set-layout" xs={24} sm={12} md={8} lg={6}>
+            <WordCard {...item} onDelete={() => { deleteVocab(index) }} />
+          </Col>
+        )
+      })
+    }
   }
 
   return (
@@ -52,13 +65,7 @@ const HomePage = () => {
       <div>
         <h1>Vocabularies</h1>
         <Row gutter={[16, 16]}>
-          {vocabs.map((item, index) => {
-            return (
-              <Col key={index} className="gutter-row set-layout" xs={24} sm={12} md={8} lg={6}>
-                <WordCard {...item} onDelete={() => { handleDelete(index) }} />
-              </Col>
-            )
-          })}
+          {renderVocabs()}
         </Row>
       </div>
     </StyledWrapper>
