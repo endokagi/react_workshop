@@ -25,18 +25,19 @@ const VocabController = () => {
     }, [])
 
     const addVocab = (word, types, meanings) => {
-        setVocabs([...vocabs, {
+
+        return col.doc(word).set({
             word,
             types,
-            meanings: meanings.split(",").map((item) => item.trim())
-        }])
+            meanings: meanings.split(",").map((item) => item.trim()),
+            createdAt: new Date()
+        })
     }
 
     const deleteVocab = (index) => {
-        const newArr = vocabs.filter((data, id) => {
-            return id !== index
-        })
-        setVocabs(newArr)
+
+        col.doc(vocabs[index].word).delete();
+
     }
 
     return { vocabs, setVocabs, addVocab, deleteVocab }
